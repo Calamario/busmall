@@ -17,8 +17,8 @@ var mainEl = document.getElementById('mainElement');
 var divEl = document.getElementById('choicesContainer');
 var testIsDoneEl = document.getElementById('testIsDone');
 var showResultButtonEl = document.getElementById('showResultButton');
-var sortButtonV = document.getElementById('sortResulVote');
-var sortButtonP = document.getElementById('sortResulPercent');
+var sortButtonVEl = document.getElementById('sortResultVote');
+var sortButtonPEl = document.getElementById('sortResultPercent');
 var sectionEl = document.createElement('section');
 sectionEl.id = 'resultSection';
 
@@ -129,13 +129,6 @@ function sortThroughVotes() {
 // }
 
 function makeResultsEl() {
-  // var sortPercentButton = document.createElement('button');
-  // sortPercentButton.textContent = 'Sort by Percent';
-  // var sortVoteButton = document.createElement('button');
-  // sortVoteButton.textContent = 'Sort by Votes';
-  // sortVoteButton.setAttribute('id', 'sortVoteButton');
-  // sectionEl.appendChild(sortPercentButton);
-  // sectionEl.appendChild(sortVoteButton);
   for(var i = 0; i < allMerch.length; i++) {
     var h3El = document.createElement('h3');
     h3El.textContent = allMerch[i].name;
@@ -180,15 +173,23 @@ voteButton3.addEventListener('click', function(e) {
 
 showResultButtonEl.addEventListener('click', function(e) {
   mainEl.appendChild(sectionEl);
-  sortButtonV.addEventListener('click', function(e) {
-    mainEl.removeChild(sectionEl);
-    sortThroughVotes();
-    makeResultsEl();
-    mainEl.appendChild(sectionEl);
-  });
+  sortButtonPEl.removeAttribute('hidden');
+  sortButtonVEl.removeAttribute('hidden');
 });
 
+sortButtonVEl.addEventListener('click', function(e) {
+  sectionEl.innerHTML = '';
+  sortThroughVotes();
+  makeResultsEl();
+  mainEl.appendChild(sectionEl);
+});
 
+sortButtonPEl.addEventListener('click', function(e) {
+  sectionEl.innerHTML = '';
+  sortThroughPercent();
+  makeResultsEl();
+  mainEl.appendChild(sectionEl);
+});
 
 
 pickNewMerch();

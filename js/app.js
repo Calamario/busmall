@@ -116,13 +116,29 @@ function sortThroughVotes() {
   allMerch.reverse();
 }
 
+// I WANT TO ADD A SORT BY WINS BUTTON AFTER EVEYRTHING 
+// var sortButton1 = document.getElementById('sortVoteButton');
+// sortButton1.addEventListener('click', function() {
+//   mainEl.removeChild(sectionEl);
+//   sortThroughVotes();
+//   makeResultsEl();
+//   mainEl.appendChild(sectionEl);
+// });
+
 function makeResultsEl() {
+  var sortPercentButton = document.createElement('button');
+  sortPercentButton.textContent = 'Sort by Percent';
+  var sortVoteButton = document.createElement('button');
+  sortVoteButton.textContent = 'Sort by Votes';
+  sortVoteButton.setAttribute('id', 'sortVoteButton');
+  sectionEl.appendChild(sortPercentButton);
+  sectionEl.appendChild(sortVoteButton);
   for(var i = 0; i < allMerch.length; i++) {
     var h3El = document.createElement('h3');
     h3El.textContent = allMerch[i].name;
     sectionEl.appendChild(h3El);
     var pEl = document.createElement('p');
-    pEl.textContent = allMerch[i].votePercent + '%';
+    pEl.textContent = allMerch[i].voted + '/' + allMerch[i].appeared + ' = ' + allMerch[i].votePercent + '% won ' ;
     sectionEl.appendChild(pEl);
   }
 }
@@ -135,9 +151,6 @@ function breakAt25() {
     var h2El = document.createElement('h2');
     h2El.textContent = 'Test is Complete: Check the results below';
     testIsDoneEl.appendChild(h2El);
-    showResultButtonEl.addEventListener('click', function(e) {
-      mainEl.appendChild(sectionEl);
-    });
   }
 }
 
@@ -160,6 +173,10 @@ voteButton3.addEventListener('click', function(e) {
   voteCounter++;
   breakAt25();
   pickNewMerch();
+});
+
+showResultButtonEl.addEventListener('click', function(e) {
+  mainEl.appendChild(sectionEl);
 });
 
 

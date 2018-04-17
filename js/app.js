@@ -1,6 +1,6 @@
 'use strict';
 
-var merch1, merch2, merch3;
+var merch1, merch2, merch3, merchCheck1, merchCheck2, merchCheck3;
 
 var merch1Img = document.getElementById('firstMerchImg');
 var merch2Img = document.getElementById('secondMerchImg');
@@ -11,7 +11,10 @@ var voteButton2 = document.getElementById('vote-button-2');
 var voteButton3 = document.getElementById('vote-button-3');
 
 var voteCounter = 0;
+var percentArr = [];
+var voteArr = [];
 
+// Going to use to Show results
 var mainEl = document.getElementById('mainElement');
 var sectionEl = document.createElement('section');
 sectionEl.id = 'resultSection';
@@ -22,8 +25,14 @@ function Merch(name, url, id) {
   this.id = id;
   this.voted = 0;
   this.appeared = 0;
-  this.voteRatio = 0;
+  this.votePercent = 0;
 }
+
+Merch.prototype.calculatePercent = function () {
+  var ratio = (this.voted / this.appeared);
+  this.votePercent = (ratio * 100);
+  percentArr.push(this.votePercent);
+};
 
 var allMerch = [
   new Merch('R2-D2 Bag', 'img/bag.jpg', 'bag'),
@@ -49,47 +58,87 @@ var allMerch = [
 ];
 
 function pickNewMerch() {
-  merch1 = allMerch[Math.floor(Math.random() * allMerch.length )];
-  merch1.appeared++;
-  merch1Img.src = merch1.url;
-  // merch1Img.id = merch1Img.id;
-  do {
-    merch2 = allMerch[Math.floor(Math.random() * allMerch.length )];
-  } while (merch1 === merch2);
-  merch2.appeared++;
-  merch2Img.src = merch2.url;
-  do {
-    merch3 = allMerch[Math.floor(Math.random() * allMerch.length )];
-  } while (merch3 === merch1 || merch3 === merch2);
-  merch3.appeared++;
-  merch3Img.src = merch3.url;
+  if(voteCounter === 0) {
+    merch1 = allMerch[Math.floor(Math.random() * allMerch.length )];
+    merch1.appeared++;
+    merch1Img.src = merch1.url;
+    merchCheck1 = merch1;
+    do {
+      merch2 = allMerch[Math.floor(Math.random() * allMerch.length )];
+    } while (merch2 === merch1);
+    merch2.appeared++;
+    merch2Img.src = merch2.url;
+    merchCheck2 = merch2;
+    do {
+      merch3 = allMerch[Math.floor(Math.random() * allMerch.length )];
+    } while (merch3 === merch1 || merch3 === merch2);
+    merch3.appeared++;
+    merch3Img.src = merch3.url;
+    merchCheck3 = merch3;
+  } else {
+    do {
+      merch1 = allMerch[Math.floor(Math.random() * allMerch.length )];
+    } while (merch1 === merchCheck1 || merch1 === merchCheck2 || merch1 === merchCheck3);
+    merch1.appeared++;
+    merch1Img.src = merch1.url;
+    do {
+      merch2 = allMerch[Math.floor(Math.random() * allMerch.length )];
+    } while (merch2 === merchCheck1 || merch2 === merchCheck2 || merch2 === merchCheck3 || merch2 === merch1);
+    merch2.appeared++;
+    merch2Img.src = merch2.url;
+    do {
+      merch3 = allMerch[Math.floor(Math.random() * allMerch.length )];
+    } while (merch3 === merchCheck1 || merch3 === merchCheck2 || merch3 === merchCheck3 || merch3 === merch1 || merch3 === merch2);
+    merch3.appeared++;
+    merch3Img.src = merch3.url;
+    merchCheck1 = merch1;
+    merchCheck2 = merch2;
+    merchCheck3 = merch3;
+  }
 }
-pickNewMerch();
 
-// function createResults() {
-//   if (voteCounter >= 25) {
-//     for(var i = 0; i > allMerch.length; i++) {
-//       var pEl = document.createElement('p');
-      
-//     }  
+function sortThroughPercent() {
+  if (voteCounter >= 25) {
+    for(var i = 0; i < allMerch.length; i++) {
+      allMerch[i].calculatePercent();
+    }
+    percentArr.sort();
+    percentArr.reverse();
+  }
+}
+
+
+// function sortThroughVotes() {
+//   for(var i = 0; i < allMerch.length; i++) {
+//     voteArr.push(allMerch[i].voted);
 //   }
+//   voteArr.sort();
+//   voteArr.reverse();
 // }
+
+function renderResults() {
+  for(var i = 0; i < allMerch.length; i++)
+}
 
 voteButton1.addEventListener('click', function(e) {
   merch1.voted++;
-  pickNewMerch();
   voteCounter++;
+  sortThroughPercent();
+  pickNewMerch();
 });
 
 voteButton2.addEventListener('click', function(e) {
   merch2.voted++;
-  pickNewMerch();
   voteCounter++;
+  sortThroughPercent();
+  pickNewMerch();
 });
 
 voteButton3.addEventListener('click', function(e) {
   merch3.voted++;
-  pickNewMerch();
   voteCounter++;
+  sortThroughPercent();
+  pickNewMerch();
 });
 
+pickNewMerch();

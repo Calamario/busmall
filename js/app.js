@@ -17,6 +17,8 @@ var mainEl = document.getElementById('mainElement');
 var divEl = document.getElementById('choicesContainer');
 var testIsDoneEl = document.getElementById('testIsDone');
 var showResultButtonEl = document.getElementById('showResultButton');
+var sortButtonVEl = document.getElementById('sortResultVote');
+var sortButtonPEl = document.getElementById('sortResultPercent');
 var sectionEl = document.createElement('section');
 sectionEl.id = 'resultSection';
 
@@ -108,7 +110,6 @@ function sortThroughPercent() {
   allMerch.reverse();
 }
 
-
 function sortThroughVotes() {
   allMerch.sort(function(obj1, obj2){
     return obj1.voted - obj2.voted;
@@ -116,23 +117,18 @@ function sortThroughVotes() {
   allMerch.reverse();
 }
 
-// I WANT TO ADD A SORT BY WINS BUTTON AFTER EVEYRTHING 
-// var sortButton1 = document.getElementById('sortVoteButton');
-// sortButton1.addEventListener('click', function() {
-//   mainEl.removeChild(sectionEl);
-//   sortThroughVotes();
-//   makeResultsEl();
-//   mainEl.appendChild(sectionEl);
-// });
+
+// function makeListenerForButton() {
+//   var sortButton1 = document.getElementById('sortVoteButton');
+//   sortButton1.addEventListener('click', function() {
+//     sectionEl.innerHTML = '';
+//     sortThroughVotes();
+//     makeResultsEl();
+//     mainEl.appendChild(sectionEl);
+//   });
+// }
 
 function makeResultsEl() {
-  var sortPercentButton = document.createElement('button');
-  sortPercentButton.textContent = 'Sort by Percent';
-  var sortVoteButton = document.createElement('button');
-  sortVoteButton.textContent = 'Sort by Votes';
-  sortVoteButton.setAttribute('id', 'sortVoteButton');
-  sectionEl.appendChild(sortPercentButton);
-  sectionEl.appendChild(sortVoteButton);
   for(var i = 0; i < allMerch.length; i++) {
     var h3El = document.createElement('h3');
     h3El.textContent = allMerch[i].name;
@@ -177,8 +173,23 @@ voteButton3.addEventListener('click', function(e) {
 
 showResultButtonEl.addEventListener('click', function(e) {
   mainEl.appendChild(sectionEl);
+  sortButtonPEl.removeAttribute('hidden');
+  sortButtonVEl.removeAttribute('hidden');
 });
 
+sortButtonVEl.addEventListener('click', function(e) {
+  sectionEl.innerHTML = '';
+  sortThroughVotes();
+  makeResultsEl();
+  mainEl.appendChild(sectionEl);
+});
+
+sortButtonPEl.addEventListener('click', function(e) {
+  sectionEl.innerHTML = '';
+  sortThroughPercent();
+  makeResultsEl();
+  mainEl.appendChild(sectionEl);
+});
 
 
 pickNewMerch();

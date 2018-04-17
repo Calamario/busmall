@@ -11,11 +11,12 @@ var voteButton2 = document.getElementById('vote-button-2');
 var voteButton3 = document.getElementById('vote-button-3');
 
 var voteCounter = 0;
-var percentArr = [];
-var voteArr = [];
 
 // Going to use to Show results
 var mainEl = document.getElementById('mainElement');
+var divEl = document.getElementById('choicesContainer');
+var testIsDoneEl = document.getElementById('testIsDone');
+var showResultButtonEl = document.getElementById('showResultButton');
 var sectionEl = document.createElement('section');
 sectionEl.id = 'resultSection';
 
@@ -30,8 +31,7 @@ function Merch(name, url, id) {
 
 Merch.prototype.calculatePercent = function () {
   var ratio = (this.voted / this.appeared);
-  this.votePercent = (ratio * 100);
-  percentArr.push(this.votePercent);
+  this.votePercent = Math.round(ratio * 100);
 };
 
 var allMerch = [
@@ -57,6 +57,7 @@ var allMerch = [
   new Merch('Wine Pod', 'img/wine-glass.jpg', 'wine-glass'),
 ];
 
+// simplify this code using arrays
 function pickNewMerch() {
   if(voteCounter === 0) {
     merch1 = allMerch[Math.floor(Math.random() * allMerch.length )];
@@ -98,47 +99,69 @@ function pickNewMerch() {
 }
 
 function sortThroughPercent() {
-  if (voteCounter >= 25) {
-    for(var i = 0; i < allMerch.length; i++) {
-      allMerch[i].calculatePercent();
-    }
-    percentArr.sort();
-    percentArr.reverse();
+  for(var i = 0; i < allMerch.length; i++) {
+    allMerch[i].calculatePercent();
   }
+  allMerch.sort(function(obj1, obj2){
+    return obj1.votePercent - obj2.votePercent;
+  });
+  allMerch.reverse();
 }
 
 
-// function sortThroughVotes() {
-//   for(var i = 0; i < allMerch.length; i++) {
-//     voteArr.push(allMerch[i].voted);
-//   }
-//   voteArr.sort();
-//   voteArr.reverse();
-// }
+function sortThroughVotes() {
+  allMerch.sort(function(obj1, obj2){
+    return obj1.voted - obj2.voted;
+  });
+  allMerch.reverse();
+}
 
-function renderResults() {
-  for(var i = 0; i < allMerch.length; i++)
+function makeResultsEl() {
+  for(var i = 0; i < allMerch.length; i++) {
+    var h3El = document.createElement('h3');
+    h3El.textContent = allMerch[i].name;
+    sectionEl.appendChild(h3El);
+    var pEl = document.createElement('p');
+    pEl.textContent = allMerch[i].votePercent + '%';
+    sectionEl.appendChild(pEl);
+  }
+}
+
+function breakAt25() {
+  if(voteCounter === 25) {
+    sortThroughPercent();
+    makeResultsEl();
+    mainEl.removeChild(divEl);
+    var h2El = document.createElement('h2');
+    h2El.textContent = 'Test is Complete: Check the results below';
+    testIsDoneEl.appendChild(h2El);
+    showResultButtonEl.addEventListener('click', function(e) {
+      mainEl.appendChild(sectionEl);
+    });
+  }
 }
 
 voteButton1.addEventListener('click', function(e) {
   merch1.voted++;
   voteCounter++;
-  sortThroughPercent();
+  breakAt25();
   pickNewMerch();
 });
 
 voteButton2.addEventListener('click', function(e) {
   merch2.voted++;
   voteCounter++;
-  sortThroughPercent();
+  breakAt25();
   pickNewMerch();
 });
 
 voteButton3.addEventListener('click', function(e) {
   merch3.voted++;
   voteCounter++;
-  sortThroughPercent();
+  breakAt25();
   pickNewMerch();
 });
+
+
 
 pickNewMerch();

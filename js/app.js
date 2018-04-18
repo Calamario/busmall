@@ -174,9 +174,15 @@ Merch.renderChart = function() {
     },
     options: {
       scales: {
+        xAxes: [{
+          ticks: {
+            autoSkip: false,
+            stepSize: 1,
+          }
+        }],
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
           }
         }]
       },

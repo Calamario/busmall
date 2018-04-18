@@ -152,6 +152,7 @@ Merch.breakAt25 = function() {
     Merch.sortThroughPercent();
     Merch.makeResult();
     Merch.fillArray();
+    Merch.renderChart();
   } else {
     Merch.renderImg();
   }
@@ -173,9 +174,15 @@ Merch.renderChart = function() {
     },
     options: {
       scales: {
+        xAxes: [{
+          ticks: {
+            autoSkip: false,
+            stepSize: 1,
+          }
+        }],
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
           }
         }]
       },

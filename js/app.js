@@ -18,6 +18,11 @@ Merch.allMerch = [];
 
 Merch.lastDisplyed = [];
 
+Merch.colorArray = [];
+Merch.percentArray = [];
+Merch.voteArray = [];
+Merch.nameArray = [];
+
 function Merch(name, url, id) {
   this.name = name;
   this.url = url;
@@ -133,14 +138,53 @@ Merch.makeResult = function() {
   }
 };
 
+Merch.fillArray = function() {
+  for(var i in Merch.allMerch) {
+    Merch.nameArray.push(Merch.allMerch[i].name);
+    Merch.percentArray.push(Merch.allMerch[i].votePercent);
+    Merch.colorArray.push('#' + Math.floor(Math.random() * 16777215));
+  }
+};
+
 Merch.breakAt25 = function() {
   if(Merch.voteCounter === Merch.maxVoteCount) {
     Merch.mainEl.removeChild(Merch.sectionEl);
     Merch.sortThroughPercent();
     Merch.makeResult();
+    Merch.fillArray();
   } else {
     Merch.renderImg();
   }
+};
+
+Merch.renderChart = function() {
+  var ctx = document.getElementById('resultChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Merch.nameArray,
+      datasets: [{
+        label: 'Win Percentage',
+        data: Merch.percentArray,
+        backgroundColor: Merch.colorArray,
+        hoverBackgroundColor: 'black'
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      title: {
+        display: true,
+        text: 'Results'
+      }
+    }
+  });
 };
 
 Merch.handleVote = function(event) {

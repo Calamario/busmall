@@ -39,7 +39,7 @@ main {
   margin: 0 auto;
 }
 
-main h2 {
+main h3 {
   font-size: 1.5em;
   width: fit-content;
   margin: 0 auto;
@@ -68,4 +68,9 @@ main section div img {
 
 main div ol img {
   width: 100px;
+}
+
+main div ol ul li {
+  display: inline-block;
+  vertical-align: top;
 }

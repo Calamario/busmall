@@ -152,6 +152,7 @@ Merch.breakAt25 = function() {
     Merch.sortThroughPercent();
     Merch.makeResult();
     Merch.fillArray();
+    Merch.renderChart();
   } else {
     Merch.renderImg();
   }

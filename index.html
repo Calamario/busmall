@@ -2,9 +2,13 @@
 <html>
   <head>
     <title>BusMall</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Do+Hyeon|IBM+Plex+Sans" rel="stylesheet">
   </head>
   <body>
     <header>
+        <h1>BusMall Royale</h1>
       <nav>
         <ul>
           <li>Home</li>
@@ -15,18 +19,16 @@
       </nav>
     </header>
     <main id="mainElement">
-      <h1>BusMall Royale</h1>
-      <h2>Choose an item you would likely buy!</h2>
-      <div id="choicesContainer">
-        <img id="firstMerchImg" src="">
-        <img id="secondMerchImg" src="">
-        <img id="thirdMerchImg" src="">
-        <button id="vote-button-1">Vote for item 1</button>
-        <button id="vote-button-2">Vote for item 2</button>
-        <button id="vote-button-3">Vote for item 3</button>
+      <h3 id="instructions">Choose an item you would likely buy!</h2>
+      <section id="choicesContainer">
+        <div><img id="firstMerchImg" src=""></div>
+        <div><img id="secondMerchImg" src=""></div>
+        <div><img id="thirdMerchImg" src=""></div>
+      </section>
+      <div id="testIsDone">
+        <ol id="resultsList"></ol>
       </div>
-      <div id="testIsDone"></div>
-      <button id="showResultButton">Click Here for Results</button>
+      <button id="showChart" hidden>Click Here for a Chart</button>
       <button id="sortResultPercent" hidden>Sort by Percent</button>
       <button id="sortResultVote" hidden>Sort by Vote</button>
     </main>

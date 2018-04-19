@@ -3,8 +3,6 @@
 Merch.allMerch = [];
 
 Merch.dataArray = [];
-// Merch.appearedArray = [];
-// Merch.voteArray = [];
 Merch.nameArray = [];
 Merch.colorArray = [];
 
@@ -45,7 +43,7 @@ Merch.prototype.calculatePercent = function () {
 };
 
 Merch.reinstance = function() {
-  if(Merch.parsedAllMerch !== null) {
+  if(Merch.parsedAllMerch) {
     for(var i in Merch.parsedAllMerch) {
       new Merch(Merch.parsedAllMerch[i].name, Merch.parsedAllMerch[i].url, Merch.parsedAllMerch[i].id);
       Merch.allMerch[i].voted = Merch.parsedAllMerch[i].voted;
@@ -115,10 +113,7 @@ Merch.fillArray = function() {
 };
 
 Merch.makeResult = function() {
-  var h2El = document.createElement('h2');
-  h2El.textContent = 'Survey is Complete. Thank you for your cooperation!';
-  Merch.testIsDoneEl.appendChild(h2El);
-  Merch.mainEl.removeChild(Merch.h3El);
+  Merch.olEl.innerHTML = '';
   for(var i = 0; i < Merch.allMerch.length; i++) {
     var liEl = document.createElement('li');
     liEl.textContent = Merch.allMerch[i].name;
@@ -229,11 +224,19 @@ Merch.showShowChartButton = function() {
   Merch.showChartButtonEl.removeAttribute('hidden');
 };
 
+Merch.changeTextOnPage = function() {
+  var h2El = document.createElement('h2');
+  h2El.textContent = 'Survey is Complete. Thank you for your cooperation!';
+  Merch.testIsDoneEl.appendChild(h2El);
+  Merch.mainEl.removeChild(Merch.h3El);
+};
+
 Merch.breakAt25 = function() {
   if(Merch.voteCounter === Merch.maxVoteCount) {
     Merch.mainEl.removeChild(Merch.sectionEl);
     Merch.calculateEachPercent();
     Merch.fillArray();
+    Merch.changeTextOnPage();
     Merch.makeResult();
     Merch.showShowChartButton();
     Merch.storeInLocalStorage();
@@ -264,8 +267,14 @@ Merch.showChartButtonEl.addEventListener('click', function(event) {
   Merch.sortVoteButtonEl.removeAttribute('hidden');
 });
 
-Merch.sortPercentButtonEl.addEventListener('click', Merch.renderChart);
-Merch.sortVoteButtonEl.addEventListener('click', Merch.renderChart);
+Merch.sortPercentButtonEl.addEventListener('click', function(event){
+  Merch.renderChart(event);
+  Merch.makeResult();
+});
+Merch.sortVoteButtonEl.addEventListener('click', function(event){
+  Merch.renderChart(event);
+  Merch.makeResult();
+});
 
 Merch.reinstance();
 Merch.renderImg(); // render for the first time page is loaded

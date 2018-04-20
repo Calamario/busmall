@@ -21,7 +21,7 @@ Merch.sortPercentButtonEl = document.getElementById('sortResultPercent');
 Merch.numOfMerchDisplayed = 3;
 Merch.arrayOfMerchImg = ['firstMerchImg', 'secondMerchImg', 'thirdMerchImg'];
 
-Merch.maxVoteCount = 1;
+Merch.maxVoteCount = 25;
 Merch.voteCounter = 0;
 
 Merch.parsedAllMerch = JSON.parse(localStorage.getItem('results'));
@@ -37,9 +37,14 @@ function Merch(name, url, id) {
 }
 
 Merch.prototype.calculatePercent = function () {
-  var ratio = (this.voted / this.appeared);
-  this.votePercent = Math.round(ratio * 100);
-  return this.votePercent;
+  if(this.appeared === 0) {
+    this.votePercent = 'Did not Appear';
+    return this.votePercent;
+  } else {
+    var ratio = (this.voted / this.appeared);
+    this.votePercent = Math.round(ratio * 100);
+    return this.votePercent;
+  }
 };
 
 Merch.reinstance = function() {
@@ -134,7 +139,11 @@ Merch.makeResult = function() {
     ulEl.appendChild(uliEl);
 
     uliEl = document.createElement('li');
-    uliEl.textContent = 'Percent Won: ' + Merch.allMerch[i].votePercent + '%';
+    if(Merch.allMerch[i].votePercent === 'Did not Appear') {
+      uliEl.textContent = Merch.allMerch[i].votePercent;
+    } else {
+      uliEl.textContent = 'Percent Won: ' + Merch.allMerch[i].votePercent + '%';
+    }
     ulEl.appendChild(uliEl);
   }
 };

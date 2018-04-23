@@ -27,6 +27,11 @@ header nav ul li {
   font-size: 1.7em;
   margin-right: 0.3em;
   text-shadow: 2px 2px #4f4a4d;
+  transition-delay: 4ms
+}
+
+header nav ul li:hover {
+  background-color: #0d1533;
 }
 
 main {
@@ -35,12 +40,17 @@ main {
   margin: 0 auto;
 }
 
-#showChart {
+button:hover {
+  background-color: #0d1533;
+}
+
+button {
   width: 25%;
   height: 3em;
   vertical-align: top;
   margin-left: 35%;
   margin-top: 7em;
+  margin-bottom: 5em;
   color: #e0d030;
   background-color: #203277;
   border-color: #203277;
@@ -48,11 +58,21 @@ main {
   font-size: 16px;
 }
 
+button:hover {
+  background-color: #0d1533;
+}
+
+.sortButton {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
 main h3 {
   font-size: 1.5em;
   width: fit-content;
   margin: 0 auto;
   padding-top: 2em;
+  margin-bottom: 1em;
 }
 
 main section {
@@ -75,9 +95,11 @@ main section div img {
   transform: translate(-50%, -50%);
 }
 
-main div ol {
+/* main div ol {
   list-style-type: decimal;
-}
+  font-size: 25px;
+  color: #e0d030;
+} */
 
 main div ol img {
   width: 100px;
@@ -89,11 +111,30 @@ main div ol li {
   margin-left: 20%;
 }
 
+ol > li {
+  color:#e0d030;
+  margin-bottom: 2em;
+  font-size: 25px;
+  text-shadow: 2px 2px #4f4a4d;
+}
+
+div ul > li {
+  color:#4f4a4d;
+  font-size: 20px;
+  text-shadow: none;
+  margin-top: 2em;
+}
+
 main div ol ul li {
   vertical-align: top;
   margin-left: 1em;
 }
 
-main div ol  li {
+h4 {
+  text-align: center;
+  color:#e0d030;
+  margin-top:3em;
+  padding-bottom: 3em;
   font-size: 20px;
+
 }

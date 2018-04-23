@@ -78,7 +78,6 @@ Merch.reinstance = function() {
   }
 };
 
-
 Merch.findUniqueNum = function() {
   var uniqueNumber = [];
   while(uniqueNumber.length < Merch.numOfMerchDisplayed) {
@@ -102,7 +101,6 @@ Merch.renderImg = function() {
     imgEl.alt = Merch.allMerch[uniqueIndicies[i]].id;
   }
 };
-
 
 Merch.calculateEachPercent = function() {
   for(var i = 0; i < Merch.allMerch.length; i++) {
@@ -182,7 +180,7 @@ Merch.renderChart = function(event) {
     for(var i in Merch.allMerch) {
       Merch.dataArray.push(Merch.allMerch[i].votePercent);
     }
-  } else  if (event.target.id === 'sortResultVote') {
+  } else if (event.target.id === 'sortResultVote') {
     Merch.clearArray();
     Merch.sortThroughVotes();
     Merch.fillArray();
@@ -234,9 +232,9 @@ Merch.showShowChartButton = function() {
 };
 
 Merch.changeTextOnPage = function() {
-  var h2El = document.createElement('h2');
-  h2El.textContent = 'Survey is Complete. Thank you for your cooperation!';
-  Merch.testIsDoneEl.appendChild(h2El);
+  var h4El = document.createElement('h4');
+  h4El.textContent = 'Survey is Complete. Thank you for your cooperation!';
+  Merch.testIsDoneEl.appendChild(h4El);
   Merch.mainEl.removeChild(Merch.h3El);
 };
 
